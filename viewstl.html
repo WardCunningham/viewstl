@@ -359,13 +359,6 @@
 				triangles_count=geo.faces.length;
 				model_filename=filename;
 
-
-								guess_file_units(xsize,ysize,zsize);
-				recalc_units();
-
-				$id('ifilename').innerHTML=filename.substr(0,20);
-				$id('ifilename').style.visibility='visible';
-
 				setTimeout(function(){$id('statswrap').style.width='280px';$id('statswrap').style.height='auto';}, 500);
 
 				waiting=false;
@@ -439,28 +432,6 @@
 			}			
 			
 			
-			function setCookie(cname, cvalue, exdays)
-			{
-				var d = new Date();
-				d.setTime(d.getTime() + (exdays*24*60*60*1000));
-				var expires = "expires="+d.toUTCString();
-				document.cookie = cname + "=" + cvalue + "; " + expires;
-			}
-			
-			function guess_file_units(xsize,ysize,zsize)
-			{
-				//try to guess the file's units (mm or inch?)
-				if ((xsize<1)&&(ysize<1)&&(zsize<1))
-				{
-					file_units=2;
-					rin.checked=true;
-				}
-				else
-				{
-					file_units=1;
-					rmm.checked=true;
-				}
-			}
 		</script>
 	<body>
 	
