@@ -86,15 +86,6 @@
 			var max_file_size=40000000;
 			var mesh_color='#909090';
 			
-			var xsize=0;
-			var ysize=0;
-			var zsize=0;
-			var vol=0;
-			var area=0;
-			var triangles_count=0;
-			var model_filename='';
-			var view_units=1; //mm
-			var file_units=1; //mm
 			var bg_color=0xffffff;
 			var deg90=Math.PI / 2;
 			var orientation="front";
@@ -349,64 +340,10 @@
 				switch_view('cjc');
 				
 				if (has_edges) set_edges(true);				
-				
-				xsize=geo.boundingBox.max.x-geo.boundingBox.min.x;
-				ysize=geo.boundingBox.max.y-geo.boundingBox.min.y;
-				zsize=geo.boundingBox.max.z-geo.boundingBox.min.z;				
-				vol_area=calc_vol_and_area(geo);
-				vol=vol_area[0];
-				area=vol_area[1];
-				triangles_count=geo.faces.length;
-				model_filename=filename;
 
 				setTimeout(function(){$id('statswrap').style.width='280px';$id('statswrap').style.height='auto';}, 500);
 
 				waiting=false;
-			}
-	
-			function calc_vol_and_area(geo)
-			{
-				var x1,x2,x3,y1,y2,y3,z1,z2,z3,i;
-				var len=geo.faces.length;
-				var totalVolume=0;
-				var totalArea=0;
-				var a,b,c,s;
-				
-				for (i=0;i<len;i++)
-				{
-					x1=geo.vertices[geo.faces[i].a].x;
-					y1=geo.vertices[geo.faces[i].a].y;
-					z1=geo.vertices[geo.faces[i].a].z;
-					x2=geo.vertices[geo.faces[i].b].x;
-					y2=geo.vertices[geo.faces[i].b].y;
-					z2=geo.vertices[geo.faces[i].b].z;
-					x3=geo.vertices[geo.faces[i].c].x;
-					y3=geo.vertices[geo.faces[i].c].y;
-					z3=geo.vertices[geo.faces[i].c].z;
-					
-					totalVolume += 
-						(-x3 * y2 * z1 + 
-						x2 * y3 * z1 +
-						x3 * y1 * z2 - 
-						x1 * y3 * z2 - 
-						x2 * y1 * z3 + 
-						x1 * y2 * z3);
-						
-					a=geo.vertices[geo.faces[i].a].distanceTo(geo.vertices[geo.faces[i].b]);
-					b=geo.vertices[geo.faces[i].b].distanceTo(geo.vertices[geo.faces[i].c]);
-					c=geo.vertices[geo.faces[i].c].distanceTo(geo.vertices[geo.faces[i].a]);
-					s=(a+b+c)/2;
-					totalArea+=Math.sqrt(s*(s-a)*(s-b)*(s-c));
-				}
-
-				return [Math.abs(totalVolume/6), totalArea];
-			}
-			
-			function numberWithCommas(x)
-			{
-				var parts = x.toString().split(".");
-				parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				return parts.join(".");
 			}
 
 			function view_example(ename)
