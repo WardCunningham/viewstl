@@ -2,51 +2,7 @@
 <!-- saved from url=(0024)https://www.viewstl.com/ -->
 
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<style>
-			html {margin: 0;}
-			body {margin: 0;}
-			
-			.cinfo
-			{
-				width:250px;
-				background:#DDDDDD;
-				border: 1px solid;
-				border-radius: 25px;
-				padding:2px 10px 2px 10px;
-				margin-bottom:20px;
-			}
-			
-			.cinfo table {width:100%;}
-			.cinfo tr {text-align:left;vertical-align:top;}
-			
-			#statswrap
-			{
-				display:inline-block;
-				vertical-align:top;
-				-webkit-transition: width 1.5s;
-				transition: width 1.5s;
-				overflow:hidden;
-			}
-			
-			.cbar
-			{
-				width:20px;
-				height:20px;
-				display:inline-block;
-				cursor:pointer;
-				border:2px solid transparent;
-			}
-			
-			.cact {margin-bottom:5px;}
-			.cact span {border-bottom: 1px dotted #3434AB;color:#3434AB;cursor:pointer;}
-			
-			}			
-		</style>
-		
-		<style>
-			h2 {margin-bottom:5px;margin-top:0px;}
-		</style>			
-	
+
 		<script src="./three.min.js"></script>
 		<script src="./webgl_detector.js"></script>
 		<script src="./OrbitControls.js"></script>
@@ -322,8 +278,8 @@
 				THREE.GeometryUtils.center(geo);
 				mesh = new THREE.Mesh(geo, material);
 				
-				$id("sel_orientation").selectedIndex=0; //front
-				
+				// $id("sel_orientation").selectedIndex=0; //front
+
 				scene.add(mesh);
 				mesh_is_ready=true;
 				
@@ -341,7 +297,9 @@
 				
 				if (has_edges) set_edges(true);				
 
-				setTimeout(function(){$id('statswrap').style.width='280px';$id('statswrap').style.height='auto';}, 500);
+				setTimeout(function(){
+					set_orientation('bottom')
+				}, 500);
 
 				waiting=false;
 			}
@@ -414,44 +372,6 @@
 				<canvas width="448" height="448"></canvas></div>
 			</div>
 		
-			<div id="statswrap" style="width: 280px; height: auto;">
-					<div class="cinfo">
-						<h2>Options</h2>
-						<table>
-							<tbody>
-							<tr>
-							<th>Orientation</th>
-								<td>
-									<select id="sel_orientation" onchange="set_orientation(this.value);">
-										<option value="front">Front</option>
-										<option value="right">Right</option>
-										<option value="top">Top</option>
-										<option value="back">Back</option>
-										<option value="left">Left</option>
-										<option value="bottom">Bottom</option>
-									</select>
-								</td>
-							</tr>							
-							
-							<tr>
-								<th>Edges</th>
-								<td>
-									<input type="radio" id="redge1" onclick="set_edges(true);" name="redge" value="0">Yes<br>
-									<input type="radio" id="redge2" onclick="set_edges(false);" name="redge" value="1" checked="">No<br>
-								</td>
-							</tr>
-							
-							<tr>
-								<th>Auto- rotation</th>
-								<td>
-									<input type="radio" id="rrotate1" onclick="controls.autoRotate=true;" name="rrotate" value="0" checked="">Yes<br>
-									<input type="radio" id="rrotate2" onclick="controls.autoRotate=false;" name="rrotate" value="1">No<br>
-								</td>
-							</tr>
-						</tbody></table>
-					</div>
-				</div>
-			</div>
 		</div>
 		
 		
@@ -548,4 +468,8 @@
 		</script>
 		
 		
-		<script>setTimeout(function(){$id('mainwrap').style.visibility='visible';}, 200);</script>
+		<script>
+			setTimeout(function(){
+				$id('mainwrap').style.visibility='visible';
+			}, 200);
+		</script>
