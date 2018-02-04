@@ -335,18 +335,12 @@
 				<div style="width:100%;text-align:center;margin-bottom:10px;">
 				</div>
 				
-				
-				<div id="pwait" style="background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0;display:none;z-index:99999999;text-align:center;">
-					<div id="wtext" style="position:relative;margin:250px auto 0 auto;width:500px;height:80px;padding-top:10px;background:#EEEEEE;font:20px Arial;color:#343434;z-index: 99999;pointer-events: auto;border-radius:25px;">
-						<span id="pwait_txt">Preparing file for 3D Printing</span><br>
-						<span style="text-decoration:underline;cursor:pointer;" onclick="cancel_3dp=true;" id="c3dp">(cancel)</span><br>
-						<progress id="pbar_3dp" value="0" max="1"></progress>
-					</div>
-				</div>				
-				
+					
 			
 		<div id="mainwrap" style="text-align: center; margin: 0px auto; visibility: visible;">
+
 			<div id="cjcwrap" style="position: relative; border: 1px dashed rgb(0, 0, 0); background: rgb(238, 238, 238); display: inline-block; height: 451px; width: 451px;">
+
 				<div id="cjcdrag" style="position: absolute; height: 100px; width: 350px; text-align: center; top: 175.5px; left: 50.5px; display: none;">
 										<span id="titlet1" style="font:20px Arial;color:#343434;">Drag &amp; drop your STL file here</span><br>
 					<span id="titlet2" style="font:14px Arial;color:#3434AB;cursor:pointer;" onclick="if (waiting) return false;$id(&#39;fileselect&#39;).click();">or <u>browse your computer</u></span>
@@ -357,7 +351,7 @@
 							<span style="width:60px;display:inline-block;margin-top:7px;">Example:</span> <span style="border-bottom: 1px dotted #3434AB;cursor:pointer;width:60px;" onclick="view_example(&#39;android.obj&#39;);">Android</span>
 						</div>
 					</div>
-									</div>
+				</div>
 				
 				<div id="cjcpbar" style="display: none; position: absolute; height: 50px; width: 350px; text-align: center; top: 163px; left: 50.5px;">
 					<span id="pgt1" style="font:15px Arial;color:#343478;">Reading file ...</span><br>
@@ -373,8 +367,7 @@
 			</div>
 		
 		</div>
-		
-		
+
 		
 		<script>
 			var scene = new THREE.Scene();
@@ -411,8 +404,8 @@
 			
 			function animate()
 			{
- 			    requestAnimationFrame(animate);
- 				renderer.render(scene, camera);
+				requestAnimationFrame(animate);
+				renderer.render(scene, camera);
 				controls.update();
 			}			
 			
