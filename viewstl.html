@@ -177,33 +177,6 @@
 				egh=null;
 			}
 
-			function set_view_units(v)
-			{
-				view_units=v;
-				$id("vunits").innerHTML=v=="1"?"mm":"in";
-				setCookie("units", v=="1"?"mm":"in", 1000);
-				recalc_units();
-			}
-			
-			function set_file_units(v)
-			{
-				file_units=v;
-				recalc_units();
-			}
-			
-			function recalc_units()
-			{
-								if (file_units==view_units)
-					set_vol_and_size(vol, xsize, ysize, zsize);
-				else if (file_units==1)
-					//file in mm, view in inches
-					set_vol_and_size(vol/16387.064, xsize/25.4, ysize/25.4, zsize/25.4);
-				else
-					//file in inches, view in mm
-					set_vol_and_size(vol*16387.064, xsize*25.4, ysize*25.4, zsize*25.4);
-							}
-
-						
 			function geo_to_vf(geo)
 			{
 				var vertices=[];
@@ -399,20 +372,16 @@
 				area=vol_area[1];
 				triangles_count=geo.faces.length;
 				model_filename=filename;
-				
-				
+
+
 								guess_file_units(xsize,ysize,zsize);
 				recalc_units();
-				
+
 				$id('ifilename').innerHTML=filename.substr(0,20);
 				$id('ifilename').style.visibility='visible';
-				
+
 				setTimeout(function(){$id('statswrap').style.width='280px';$id('statswrap').style.height='auto';}, 500);
-								
-								
-				//$id('cjcwrap').addEventListener('dragover', handleDragOver, false);
-				//$id('cjcwrap').addEventListener('drop', handleFileDrop, false);				
-				
+
 				waiting=false;
 			}
 			
@@ -568,18 +537,6 @@
 				document.cookie = cname + "=" + cvalue + "; " + expires;
 			}
 			
-			function getCookie(cname)
-			{
-				var name = cname + "=";
-				var ca = document.cookie.split(';');
-				for(var i=0; i<ca.length; i++) {
-					var c = ca[i];
-					while (c.charAt(0)==' ') c = c.substring(1);
-					if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-				}
-				return "";
-			}			
-			
 			function guess_file_units(xsize,ysize,zsize)
 			{
 				//try to guess the file's units (mm or inch?)
@@ -594,14 +551,6 @@
 					rmm.checked=true;
 				}
 			}
-			
-			function set_vol_and_size(vol,xsize,ysize,zsize)
-			{
-				var p=view_units==2?2:0;
-				$id('ivol').innerHTML=numberWithCommas(vol.toFixed(p));
-				$id('isize').innerHTML=numberWithCommas(xsize.toFixed(p))+' x '+numberWithCommas(ysize.toFixed(p))+' x '+numberWithCommas(zsize.toFixed(p));
-			}
-			
 		</script>
 	<body>
 	
@@ -648,29 +597,6 @@
 			</div>
 		
 			<div id="statswrap" style="width: 280px; height: auto;">
-				<div style="width:280px;overflow:hidden;">
-					<div class="cinfo">
-						<h2>Model info</h2>
-						<table>
-							<tbody><tr style="vertical-align:bottom;">
-								<th>Size (<select id="suview" onchange="set_view_units(this.value);"><option value="1">mm</option><option value="2">in</option></select>)</th>
-								<td id="isize" style="width:50%;">59 x 64 x 131</td>
-							</tr>
-							<tr>
-								<th>Volume (<span id="vunits">mm</span><sup>3</sup>)</th>
-								<td id="ivol" style="text-align:left;">64,526</td>
-							</tr>
-							<tr>
-								<th>File units</th>
-								<td>
-									<input type="radio" id="rmm" onclick="set_file_units(1);" name="runits" value="0" checked="">mm<br>
-									<input type="radio" id="rin" onclick="set_file_units(2);" name="runits" value="1">in<br>
-								</td>
-							</tr>
-						</tbody></table>
-					</div>
-					
-					
 					<div class="cinfo">
 						<h2>Options</h2>
 						<table>
@@ -777,12 +703,6 @@
  				renderer.render(scene, camera);
 				controls.update();
 			}			
-			
-						
-			var units_cookie=getCookie("units");
-			suview.value=units_cookie=="in"?2:1;
-			view_units=units_cookie=="in"?2:1;
-			$id("vunits").innerHTML=units_cookie=="in"?"in":"mm";
 			
 						
 			//this function is being called from outside (from embedded page)
