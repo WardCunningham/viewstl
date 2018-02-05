@@ -5,7 +5,7 @@ function parse_3d_file(filename, s)
 	switch (filename.split('.').pop().toLowerCase())
 	{
 		case "stl":
-			return parse_stl_bin(s);
+			return parse_stl_ascii(s);
 			break;
 		case "obj":
 			return parse_obj(s);
@@ -356,7 +356,8 @@ function parse_stl_ascii (s)
 {
 	try
 	{	
-		var stl_string=arrayBufferToString(s);
+		// var stl_string=arrayBufferToString(s);
+		var stl_string = s
 		
 		var vertices=[];
 		var faces=[];

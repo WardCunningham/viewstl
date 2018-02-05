@@ -3,6 +3,11 @@
 
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+	<script
+		src="http://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+
 		<script src="./three.min.js"></script>
 		<script src="./webgl_detector.js"></script>
 		<script src="./OrbitControls.js"></script>
@@ -464,5 +469,9 @@
 		<script>
 			setTimeout(function(){
 				$id('mainwrap').style.visibility='visible';
+
+				$.get('http://scad.fed.wiki/assets/viewstl/twist.stl',
+					function( data ) {
+						after_file_load('twist.stl', data)})
 			}, 200);
 		</script>
