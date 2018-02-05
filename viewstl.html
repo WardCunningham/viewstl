@@ -12,8 +12,6 @@
 		<script src="./webgl_detector.js"></script>
 		<script src="./OrbitControls.js"></script>
 		<script src="./parser.js"></script>
-		<script src="./read_internal.js"></script>
-		<script src="./read_external.js"></script>
 
 		<script> var need_browser=false; </script>
 
@@ -162,57 +160,12 @@
 				$id('cjc').style.width=(height-220)+'px';
 				$id('cjcwrap').style.height=(height-220)+'px';
 				$id('cjcwrap').style.width=(height-220)+'px';
-				$id('cjcdrag').style.top=((height-320)/2)+'px';
-				$id('cjcdrag').style.left=((height-570)/2)+'px';
-				$id('cjcpbar').style.top=((height-345)/2)+'px';
-				$id('cjcpbar').style.left=((height-570)/2)+'px';
-				$id('cjcproc').style.top=((height-345)/2)+'px';
-				$id('cjcproc').style.left=((height-570)/2)+'px';
 								
 				var rsize_width=$id("cjcwrap").getBoundingClientRect().width;
 				var rsize_height=$id("cjcwrap").getBoundingClientRect().height;
 				renderer.setSize(rsize_width-5, rsize_height-5);
 			}
 			
-			function handleDragOver(e)
-			{
-				if (waiting) return;
-			
-				e.stopPropagation();
-				e.preventDefault();
-				e.dataTransfer.dropEffect = 'copy';			
-			}
-			
-			function handleFileDrop(e)
-			{
-				e.stopPropagation();
-				e.preventDefault();
-				
-				if (waiting) return;
-			
-				//first, check if its a file
-				if (e.dataTransfer.files.length>0)
-				{
-					if (e.dataTransfer.files[0].size>max_file_size)
-					{
-						alert('File is too big - maximum allowed size is 35mb');
-						return false;
-					}
-					
-					if (!supported_file_type(e.dataTransfer.files[0].name))
-					{
-						alert('File type is not supported');
-						return false;
-					}
-					read_file(e.dataTransfer.files[0]);
-				}
-				
-				else if (typeof e.dataTransfer.getData("Text") === 'string')
-				{
-					//check - maybe a url?
-					read_from_url(e.dataTransfer.getData("Text"));
-				}				
-			}
 			
 			function supported_file_type (filename)
 			{
@@ -232,9 +185,6 @@
 			
 			function switch_view(v)
 			{
-				$id('cjcdrag').style.display=((v=='drag')?'block':'none');
-				$id('cjcpbar').style.display=((v=='pbar')?'block':'none');
-				$id('cjcproc').style.display=((v=='proc')?'block':'none');
 				$id('cjc').style.display=((v=='cjc')?'block':'none');
 			}
 			
@@ -302,9 +252,7 @@
 				
 				if (has_edges) set_edges(true);				
 
-				setTimeout(function(){
-					set_orientation('bottom')
-				}, 500);
+				set_orientation('bottom')
 
 				waiting=false;
 			}
@@ -334,43 +282,16 @@
 			
 		</script>
 	<body>
-	
-		<input type="file" style="position:absolute; top:-150px;" id="fileselect" onchange="prepare_upload_file();">
-	
-				<div style="width:100%;text-align:center;margin-bottom:10px;">
-				</div>
 				
-					
-			
 		<div id="mainwrap" style="text-align: center; margin: 0px auto; visibility: visible;">
 
 			<div id="cjcwrap" style="position: relative; border: 1px dashed rgb(0, 0, 0); background: rgb(238, 238, 238); display: inline-block; height: 451px; width: 451px;">
 
-				<div id="cjcdrag" style="position: absolute; height: 100px; width: 350px; text-align: center; top: 175.5px; left: 50.5px; display: none;">
-										<span id="titlet1" style="font:20px Arial;color:#343434;">Drag &amp; drop your STL file here</span><br>
-					<span id="titlet2" style="font:14px Arial;color:#3434AB;cursor:pointer;" onclick="if (waiting) return false;$id(&#39;fileselect&#39;).click();">or <u>browse your computer</u></span>
-															<div style="width:100%;text-align:center;margin:30px auto 0 auto;">
-						<div style="font:12px Arial;color:#5656AB;text-align:left;width:130px;margin:0 auto;">
-							<span style="width:60px;display:inline-block;">Example:</span> <span style="border-bottom: 1px dotted #3434AB;cursor:pointer;width:60px;" onclick="view_example(&#39;knot.stl&#39;);">Knot</span>
-							<br>
-							<span style="width:60px;display:inline-block;margin-top:7px;">Example:</span> <span style="border-bottom: 1px dotted #3434AB;cursor:pointer;width:60px;" onclick="view_example(&#39;android.obj&#39;);">Android</span>
-						</div>
-					</div>
-				</div>
-				
-				<div id="cjcpbar" style="display: none; position: absolute; height: 50px; width: 350px; text-align: center; top: 163px; left: 50.5px;">
-					<span id="pgt1" style="font:15px Arial;color:#343478;">Reading file ...</span><br>
-					<progress id="file_pbar" value="100" max="1"></progress><br><span id="fcancel" style="text-decoration:underline;cursor:pointer;" onclick="cancel_download=true;">(cancel)</span>
+				<div id="cjc" onmousedown="$id(&#39;rrotate2&#39;).checked=true;controls.autoRotate=false;" style="display: block; position: absolute; left: 0px; top: 0px; margin: 0px auto; text-align: center; height: 451px; width: 451px;">
 				</div>
 
-				<div id="cjcproc" style="display: none; position: absolute; height: 50px; width: 350px; text-align: center; top: 163px; left: 50.5px;">
-					<span id="prt1" style="font:15px Arial;color:#343478;">Processing ...</span><br>
-				</div>
-				
-				<div id="cjc" onmousedown="$id(&#39;rrotate2&#39;).checked=true;controls.autoRotate=false;" style="display: block; position: absolute; left: 0px; top: 0px; margin: 0px auto; text-align: center; height: 451px; width: 451px;">
-				<canvas width="448" height="448"></canvas></div>
 			</div>
-		
+
 		</div>
 
 		
@@ -456,8 +377,6 @@
 				do_resize();
 			}
 
-			$id('cjcwrap').addEventListener('dragover', handleDragOver, false);
-			$id('cjcwrap').addEventListener('drop', handleFileDrop, false);
 		</script>
 
 		<script>
@@ -488,5 +407,5 @@
 				$.get(stl,
 					function( data ) {
 						after_file_load('twist.stl', data)})
-			}, 200);
+			}, 20);
 		</script>
