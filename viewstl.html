@@ -155,11 +155,11 @@
 			{
 				var height = isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight;
 				var width = isNaN(window.innerWidth) ? window.clientWidth : window.innerWidth;
-								height=Math.min(height,width-150);
-				$id('cjc').style.height=(height-220)+'px';
-				$id('cjc').style.width=(height-220)+'px';
-				$id('cjcwrap').style.height=(height-220)+'px';
-				$id('cjcwrap').style.width=(height-220)+'px';
+								height=Math.min(height,width);
+				$id('cjc').style.height=(height)+'px';
+				$id('cjc').style.width=(height)+'px';
+				$id('cjcwrap').style.height=(height)+'px';
+				$id('cjcwrap').style.width=(height)+'px';
 								
 				var rsize_width=$id("cjcwrap").getBoundingClientRect().width;
 				var rsize_height=$id("cjcwrap").getBoundingClientRect().height;
@@ -285,7 +285,7 @@
 				
 		<div id="mainwrap" style="text-align: center; margin: 0px auto; visibility: visible;">
 
-			<div id="cjcwrap" style="position: relative; border: 1px dashed rgb(0, 0, 0); background: rgb(238, 238, 238); display: inline-block; height: 451px; width: 451px;">
+			<div id="cjcwrap" style="position: relative; rgb(0, 0, 0); background: rgb(238, 238, 238); display: inline-block; height: 451px; width: 451px;">
 
 				<div id="cjc" onmousedown="$id(&#39;rrotate2&#39;).checked=true;controls.autoRotate=false;" style="display: block; position: absolute; left: 0px; top: 0px; margin: 0px auto; text-align: center; height: 451px; width: 451px;">
 				</div>
